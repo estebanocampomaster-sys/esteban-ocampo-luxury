@@ -1,126 +1,102 @@
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Instagram, Facebook, ChevronRight, Cpu, Box, Compass, Anchor, Maximize2 } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
-
-// --- ESTÉTICA DE LUJO: COMPONENTES ---
-
-const LuxuryOverlay = () => (
-  <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.05] mix-blend-overlay">
-    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/center/svg">
-      <filter id="noiseFilter">
-        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch" />
-      </filter>
-      <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-    </svg>
-  </div>
-);
+import React, { useState, useEffect } from 'react';
+import { Calculator, TrendingUp, TrendingDown, Scale, Info } from 'lucide-react';
 
 export default function App() {
-  const mainRef = useRef(null);
-  const [lawRes, setLawRes] = useState(null);
+  const [activeTab, setActiveTab] = useState('convert');
+  const [form, setForm] = useState({ q: 24, m: 1000, peso: 1000, leyActual: 916, leyDeseada: 750 });
+  const [result, setResult] = useState("");
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      const tl = gsap.timeline();
-      tl.from(".hero-line", { y: 100, opacity: 0, duration: 1.2, stagger: 0.2, ease: "power4.out" })
-        .from(".hero-image", { scale: 1.2, opacity: 0, duration: 2, ease: "expo.out" }, "-=1");
-    });
-    return () => ctx.revert();
-  }, []);
+  const handleCalc = () => {
+    let res = "";
+    const { q, m, peso, leyActual, leyDeseada } = form;
 
-  const calculateGold = (e) => {
-    const value = e.target.value;
-    if(!value) return setLawRes(null);
-    setLawRes({
-      ley: (value / 24).toFixed(3),
-      porcentaje: ((value / 24) * 100).toFixed(1) + "%"
-    });
+    if (activeTab === 'convert') {
+      const milesimas = (q * 1000 / 24).toFixed(2);
+      const quilates = (m * 24 / 1000).toFixed(2);
+      res = `${q}q = ${milesimas} milésimas | ${m} milésimas = ${quilates}q`;
+    } 
+    else if (activeTab === 'bajar') {
+      if (leyActual <= leyDeseada) return setResult("La ley actual debe ser mayor para bajarla.");
+      const liga = (((leyActual - leyDeseada) * peso) / leyDeseada);
+      const total = parseFloat(peso) + liga;
+      res = `Añadir ${liga.toFixed(2)}g de liga. Total: ${total.toFixed(2)}g a ley ${leyDeseada}.`;
+    } 
+    else if (activeTab === 'subir') {
+      if (leyActual >= leyDeseada) return setResult("La ley actual debe ser menor para subirla.");
+      const fino = (((leyDeseada - leyActual) * peso) / (1000 - leyDeseada));
+      const total = parseFloat(peso) + fino;
+      res = `Añadir ${fino.toFixed(2)}g de oro fino. Total: ${total.toFixed(2)}g a ley ${leyDeseada}.`;
+    }
+    setResult(res);
   };
 
+  useEffect(() => { handleCalc(); }, [form, activeTab]);
+
   return (
-    <div ref={mainRef} className="bg-[#050705] text-[#d4d9d4] min-h-screen font-sans selection:bg-[#c5a47e] selection:text-black">
-      <LuxuryOverlay />
-      
-      {/* HEADER MINIMALISTA */}
-      <nav className="fixed top-0 w-full z-50 flex justify-between items-center p-8 mix-blend-difference">
-        <span className="text-xl font-light tracking-[0.3em] uppercase">Esteban Ocampo</span>
-        <div className="flex gap-8 text-xs tracking-widest uppercase opacity-60">
-          <a href="#" className="hover:opacity-100 transition-opacity">Proyectos</a>
-          <a href="#" className="hover:opacity-100 transition-opacity">Laboratorio</a>
-        </div>
-      </nav>
+    <div style={{ backgroundColor: '#000', color: '#fff', minHeight: '100vh', fontFamily: 'Inter, sans-serif', padding: '20px' }}>
+      <header style={{ textAlign: 'center', padding: '40px 0', borderBottom: '1px solid #111' }}>
+        <h1 style={{ letterSpacing: '10px', textTransform: 'uppercase', fontWeight: '200', fontSize: '1.5rem' }}>Esteban Ocampo</h1>
+        <p style={{ color: '#c5a47e', fontSize: '0.7rem', marginTop: '10px', letterSpacing: '3px' }}>PRECISIÓN EN JOYERÍA 3D</p>
+      </header>
 
-      {/* HERO SECTION - REVELACIÓN CINEMÁTICA */}
-      <section className="relative h-screen flex flex-col justify-center px-8 md:px-24 overflow-hidden">
-        <div className="z-10">
-          <h2 className="hero-line text-[10vw] md:text-[7vw] font-light leading-none tracking-tighter mb-4 italic">
-            Arte <span className="text-[#c5a47e]">3D</span>
-          </h2>
-          <h1 className="hero-line text-[10vw] md:text-[7vw] font-bold leading-none tracking-tighter uppercase">
-            Joyería de Autor
-          </h1>
-          <p className="hero-line max-w-md mt-8 text-sm md:text-base opacity-50 font-light leading-relaxed">
-            Fusionando la precisión técnica del modelado 3D con la esencia orgánica de la joyería fina. 
-            Piezas diseñadas para la eternidad.
-          </p>
+      <div style={{ maxWidth: '900px', margin: '40px auto', background: '#050505', borderRadius: '40px', border: '1px solid #1a1a1a', overflow: 'hidden' }}>
+        {/* NAVEGACIÓN DE HERRAMIENTAS */}
+        <div style={{ display: 'flex', background: '#0a0a0a' }}>
+          {[
+            { id: 'convert', label: 'Conversión', icon: <Scale size={16}/> },
+            { id: 'bajar', label: 'Bajar Ley', icon: <TrendingDown size={16}/> },
+            { id: 'subir', label: 'Subir Ley', icon: <TrendingUp size={16}/> }
+          ].map(tab => (
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
+              flex: 1, padding: '25px', border: 'none', background: activeTab === tab.id ? '#000' : 'transparent',
+              color: activeTab === tab.id ? '#c5a47e' : '#444', cursor: 'pointer', fontSize: '0.7rem', textTransform: 'uppercase',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', transition: '0.3s'
+            }}>
+              {tab.icon} {tab.label}
+            </button>
+          ))}
         </div>
-        
-        {/* ELEMENTO VISUAL DE FONDO */}
-        <div className="hero-image absolute right-[-5%] top-[20%] w-[60%] h-[70%] bg-[#1a1c1a] rounded-tl-[200px] opacity-20 blur-3xl" />
-      </section>
 
-      {/* SECCIÓN TÉCNICA: CALCULADORA DE LEY (VALOR AGREGADO) */}
-      <section className="py-32 px-8 bg-[#0a0c0a] border-y border-white/5">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-20 items-center">
-          <div className="flex-1">
-            <h3 className="text-3xl font-light mb-8">Herramientas de Precisión</h3>
-            <div className="space-y-6">
-              <div className="group border-b border-white/10 pb-4">
-                <label className="text-[10px] uppercase tracking-[0.2em] opacity-40">Calculadora de Ley (Kilataje)</label>
-                <input 
-                  type="number" 
-                  placeholder="Ingresa quilates (ej: 18)" 
-                  onChange={calculateGold}
-                  className="bg-transparent w-full text-2xl py-2 outline-none text-[#c5a47e]"
-                />
-              </div>
-              {lawRes && (
-                <div className="flex gap-10 animate-fade-in">
-                  <div>
-                    <p className="text-[10px] opacity-40 uppercase">Ley Decimal</p>
-                    <p className="text-3xl font-bold">{lawRes.ley}</p>
-                  </div>
-                  <div>
-                    <p className="text-[10px] opacity-40 uppercase">Pureza</p>
-                    <p className="text-3xl font-bold">{lawRes.porcentaje}</p>
-                  </div>
-                </div>
-              )}
+        {/* ÁREA DE TRABAJO TÉCNICO */}
+        <div style={{ padding: '60px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px' }}>
+            {activeTab === 'convert' && (
+              <>
+                <div><label style={{display:'block', fontSize:'0.6rem', color:'#444', marginBottom:'10px'}}>QUILATES</label>
+                <input type="number" value={form.q} onChange={e => setForm({...form, q: e.target.value})} style={inputStyle}/></div>
+                <div><label style={{display:'block', fontSize:'0.6rem', color:'#444', marginBottom:'10px'}}>MILÉSIMAS</label>
+                <input type="number" value={form.m} onChange={e => setForm({...form, m: e.target.value})} style={inputStyle}/></div>
+              </>
+            )}
+            {(activeTab === 'bajar' || activeTab === 'subir') && (
+              <>
+                <div><label style={{display:'block', fontSize:'0.6rem', color:'#444', marginBottom:'10px'}}>PESO LINGOTE (g)</label>
+                <input type="number" value={form.peso} onChange={e => setForm({...form, peso: e.target.value})} style={inputStyle}/></div>
+                <div><label style={{display:'block', fontSize:'0.6rem', color:'#444', marginBottom:'10px'}}>LEY ACTUAL</label>
+                <input type="number" value={form.leyActual} onChange={e => setForm({...form, leyActual: e.target.value})} style={inputStyle}/></div>
+                <div><label style={{display:'block', fontSize:'0.6rem', color:'#444', marginBottom:'10px'}}>LEY DESEADA</label>
+                <input type="number" value={form.leyDeseada} onChange={e => setForm({...form, leyDeseada: e.target.value})} style={inputStyle}/></div>
+              </>
+            )}
+          </div>
+
+          {result && (
+            <div style={{ marginTop: '50px', padding: '40px', background: '#000', borderRadius: '20px', border: '1px solid #c5a47e33', textAlign: 'center' }}>
+              <p style={{ color: '#c5a47e', fontSize: '0.7rem', marginBottom: '10px', textTransform: 'uppercase' }}>Resultado de Taller</p>
+              <h2 style={{ fontSize: '2rem', fontWeight: 'bold', margin: '0' }}>{result}</h2>
             </div>
-          </div>
-          <div className="w-full md:w-1/3 p-8 border border-white/5 bg-gradient-to-b from-white/5 to-transparent rounded-2xl">
-            <Cpu className="text-[#c5a47e] mb-4" size={32} />
-            <p className="text-xs opacity-50 leading-relaxed uppercase tracking-widest">Servicio de optimización para fundición y prototipado 3D de alta resolución.</p>
-          </div>
+          )}
         </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="p-12 flex justify-between items-end border-t border-white/5">
-        <div className="space-y-4">
-          <p className="text-[10px] opacity-30 uppercase tracking-[0.4em]">Esteban Ocampo © 2026</p>
-          <div className="flex gap-4">
-            <Instagram size={18} className="opacity-40 hover:opacity-100 cursor-pointer transition-opacity" />
-            <Facebook size={18} className="opacity-40 hover:opacity-100 cursor-pointer transition-opacity" />
-          </div>
-        </div>
-        <button className="flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] font-bold text-[#c5a47e]">
-          Consultas Privadas <ChevronRight size={14} />
-        </button>
+      </div>
+      
+      <footer style={{ textAlign: 'center', marginTop: '60px', opacity: '0.2', fontSize: '0.6rem', letterSpacing: '3px' }}>
+        HERRAMIENTA PROFESIONAL • ESTEBAN OCAMPO • 2026
       </footer>
     </div>
   );
 }
+
+const inputStyle = {
+  width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid #222', 
+  color: '#fff', fontSize: '1.5rem', outline: 'none', padding: '10px 0'
+};
