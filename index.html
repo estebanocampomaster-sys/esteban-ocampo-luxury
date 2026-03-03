@@ -1,13 +1,338 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Esteban Ocampo | Joyería 3D & Arte</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esteban Ocampo | Master Class Joyería 3.0</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@200;400;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .selection-orange::selection { background-color: #CC5833; color: white; }
+        
+        /* Smooth Scroll */
+        html { scroll-behavior: smooth; }
+
+        /* Efecto de Grano Cinematográfico */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 60;
+            opacity: 0.03;
+            mix-blend-mode: multiply;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .archive-card { position: sticky; top: 120px; }
+        
+        .transition-glow:hover {
+            box-shadow: 0 0 20px rgba(204, 88, 51, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-white text-black selection-orange overflow-x-hidden">
+
+    <!-- Capa de Textura Material -->
+    <div class="noise-overlay"></div>
+
+    <!-- Navegación de Alta Gama -->
+    <nav class="fixed top-0 left-0 w-full z-50 px-8 py-10 flex justify-between items-center mix-blend-difference text-white">
+        <div class="flex flex-col">
+            <span class="font-black tracking-tighter text-2xl uppercase leading-none">Esteban Ocampo</span>
+            <span class="text-[#CC5833] text-[10px] font-bold tracking-[0.4em] uppercase mt-1">Master Class</span>
+        </div>
+        
+        <div class="hidden lg:flex gap-16 text-[10px] font-black uppercase tracking-[0.3em]">
+            <a href="#metodo" class="hover:text-[#CC5833] transition-all duration-300">El Método</a>
+            <a href="#archivo" class="hover:text-[#CC5833] transition-all duration-300">Programa</a>
+            <a href="#contacto" class="hover:text-[#CC5833] transition-all duration-300">Contacto</a>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <!-- Redes en el Header -->
+            <div class="hidden md:flex gap-5 border-r border-white/20 pr-6 mr-2">
+                <a href="#" target="_blank" class="hover:text-[#CC5833] transition-colors"><i data-lucide="instagram" style="width:18px"></i></a>
+                <a href="#" target="_blank" class="hover:text-[#CC5833] transition-colors"><i data-lucide="facebook" style="width:18px"></i></a>
+                <a href="#" target="_blank" class="hover:text-[#CC5833] transition-colors"><i data-lucide="music-2" style="width:18px"></i></a>
+            </div>
+            <button class="bg-white text-black px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-[#CC5833] hover:text-white transition-all duration-300">
+                Inscribirme
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section: Impacto Visual -->
+    <header class="relative h-screen w-full flex items-center px-8 md:px-24 bg-black overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img 
+                src="https://raw.githubusercontent.com/josedavid/images/main/fotos%20esteban%20ocampo%20trabajando%20fotos%20para%20pagina%20(5).jpeg" 
+                alt="[Imagen de Esteban Ocampo trabajando]" 
+                class="w-full h-full object-cover opacity-60 grayscale scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl">
+            <div class="hero-text text-[#CC5833] text-xs font-bold tracking-[0.5em] mb-10 uppercase flex items-center gap-4">
+                <div class="w-12 h-[1px] bg-[#CC5833]"></div> 30 Años de Legado en Joyería
+            </div>
+            <h1 class="hero-text text-white text-7xl md:text-[11rem] font-serif leading-[0.8] mb-12 tracking-tighter">
+                Maestro <br />
+                <span class="italic text-[#CC5833]">Joyero 3.0</span>
+            </h1>
+            <p class="hero-text text-white/40 text-lg md:text-2xl max-w-xl font-light mb-14 leading-relaxed">
+                Fusionando la tradición de Joyería Yajaira con la precisión absoluta del diseño 3D e IA.
+            </p>
+            <div class="hero-text flex flex-col sm:flex-row gap-8">
+                <button class="bg-[#CC5833] text-white px-12 py-6 rounded-full font-black text-xs tracking-[0.2em] hover:scale-105 transition-all shadow-2xl uppercase transition-glow">
+                    Contenido Exclusivo
+                </button>
+                <button class="border border-white/20 text-white px-12 py-6 rounded-full font-black text-xs tracking-[0.2em] hover:bg-white hover:text-black transition-all uppercase">
+                    WhatsApp Directo
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- El Método -->
+    <section id="metodo" class="py-40 px-8 md:px-24 bg-white grid md:grid-cols-2 gap-32 items-center">
+        <div class="reveal">
+            <span class="text-[10px] font-black tracking-[0.6em] text-[#CC5833] uppercase mb-6 block">Dualidad Técnica</span>
+            <h2 class="text-6xl md:text-8xl font-serif mb-16 leading-none tracking-tighter">
+                De la mesa <br /> al <span class="italic text-[#CC5833]">algoritmo.</span>
+            </h2>
+            <div class="space-y-16">
+                <div class="group border-b border-black/5 pb-10">
+                    <h4 class="text-black font-bold text-sm tracking-widest uppercase mb-4 flex items-center gap-3">
+                        <i data-lucide="gem" class="text-[#CC5833]" style="width:16px"></i> 01. Oficio de Banco
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-md">30 años de experiencia real. Dominio del metal y la fundición antes de la digitalización.</p>
+                </div>
+                <div class="group border-b border-black/5 pb-10">
+                    <h4 class="text-black font-bold text-sm tracking-widest uppercase mb-4 flex items-center gap-3">
+                        <i data-lucide="cpu" class="text-[#CC5833]" style="width:16px"></i> 02. Dominio MatrixGold
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-md">Creación de geometrías perfectas y engastes técnicos imposibles de lograr manualmente.</p>
+                </div>
+                <div class="group border-b border-black/5 pb-10">
+                    <h4 class="text-black font-bold text-sm tracking-widest uppercase mb-4 flex items-center gap-3">
+                        <i data-lucide="zap" class="text-[#CC5833]" style="width:16px"></i> 03. IA Generativa
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-md">Utilizamos la IA como catalizador creativo para explorar miles de variaciones en segundos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="reveal space-y-8">
+            <div class="aspect-[4/5] bg-black rounded-[3rem] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000">
+                <img src="https://raw.githubusercontent.com/josedavid/images/main/1772495540370.jpg" alt="[Anillo físico en mesa de trabajo]" class="w-full h-full object-cover opacity-80" />
+            </div>
+            <div class="flex justify-end">
+                <div class="w-2/3 aspect-video bg-[#1A1A1A] rounded-[2rem] overflow-hidden shadow-xl border border-white/5">
+                    <img src="https://raw.githubusercontent.com/josedavid/images/main/trabajo%20cad.jpg" alt="[Diseño CAD en MatrixGold]" class="w-full h-full object-cover" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Manifiesto de Autoridad -->
+    <section class="bg-black text-white py-48 px-8 text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 flex items-center justify-center">
+            <h2 class="text-[25vw] font-serif italic text-white/5 select-none tracking-tighter">Artesano</h2>
+        </div>
+        <div class="reveal max-w-5xl mx-auto relative z-10">
+            <div class="w-16 h-16 bg-[#CC5833] rounded-full mx-auto mb-16 flex items-center justify-center shadow-[0_0_50px_rgba(204,88,51,0.4)]">
+                <i data-lucide="gem" class="text-white" style="width:32px; height:32px"></i>
+            </div>
+            <h2 class="text-5xl md:text-8xl font-serif italic mb-16 leading-tight tracking-tighter">
+                "La tecnología no sustituye la mano del maestro, <br /> le otorga <span class="text-[#CC5833]">precisión infinita</span>."
+            </h2>
+            <div class="flex items-center justify-center gap-6">
+                <div class="h-[1px] w-20 bg-white/10"></div>
+                <p class="text-white/40 tracking-[0.6em] uppercase text-[10px] font-black">Esteban Ocampo | Mentor IA</p>
+                <div class="h-[1px] w-20 bg-white/10"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programa Master Class -->
+    <section id="archivo" class="py-40 px-8 md:px-24">
+        <div class="flex flex-col md:flex-row justify-between items-baseline mb-32 reveal text-left">
+            <h3 class="text-7xl md:text-9xl font-serif tracking-tighter leading-none mb-8 md:mb-0">Programa<br /><span class="text-[#CC5833]">Master.</span></h3>
+            <p class="text-gray-400 text-xs tracking-[0.4em] uppercase font-bold border-l border-[#CC5833] pl-6">Evoluciona tu taller al estándar 3.0</p>
+        </div>
+
+        <div class="space-y-6">
+            <!-- Módulo I -->
+            <div class="archive-card group bg-white border border-black/10 p-16 rounded-[4rem] flex flex-col md:flex-row justify-between items-center hover:border-[#CC5833] transition-all duration-500 shadow-sm text-left">
+                <div class="md:w-2/3">
+                    <span class="text-[#CC5833] font-black text-xs tracking-[0.4em] uppercase mb-8 block">Módulo I</span>
+                    <h4 class="text-5xl md:text-7xl font-serif mb-10 tracking-tighter group-hover:italic transition-all">Escultura Digital</h4>
+                    <p class="text-gray-400 text-lg leading-relaxed max-w-md">Dominio de MatrixGold para fabricar piezas con una complejidad inalcanzable a mano.</p>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="w-24 h-24 rounded-full border-2 border-black/5 flex items-center justify-center group-hover:bg-[#CC5833] group-hover:border-[#CC5833] group-hover:text-white transition-all duration-500">
+                        <i data-lucide="arrow-right" style="width:32px; height:32px"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Módulo II -->
+            <div class="archive-card group bg-white border border-black/10 p-16 rounded-[4rem] flex flex-col md:flex-row justify-between items-center hover:border-[#CC5833] transition-all duration-500 shadow-sm text-left">
+                <div class="md:w-2/3">
+                    <span class="text-[#CC5833] font-black text-xs tracking-[0.4em] uppercase mb-8 block">Módulo II</span>
+                    <h4 class="text-5xl md:text-7xl font-serif mb-10 tracking-tighter group-hover:italic transition-all">IA Joyera</h4>
+                    <p class="text-gray-400 text-lg leading-relaxed max-w-md">Uso de prompts y modelos generativos para crear colecciones y renders fotorrealistas en minutos.</p>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="w-24 h-24 rounded-full border-2 border-black/5 flex items-center justify-center group-hover:bg-[#CC5833] group-hover:border-[#CC5833] group-hover:text-white transition-all duration-500">
+                        <i data-lucide="arrow-right" style="width:32px; height:32px"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Final: Bitcoin Pendant -->
+    <section class="py-40 px-8 bg-white border-t border-black/5">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-24 items-center">
+           <div class="reveal aspect-[4/6] bg-black rounded-[4rem] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000">
+              <img src="https://raw.githubusercontent.com/josedavid/images/main/fotos%20trabajos%20fondo%20negro%20(6).png" alt="[Pieza final: Dije Bitcoin de oro]" class="w-full h-full object-cover" />
+           </div>
+           <div class="reveal text-left">
+              <h3 class="text-5xl md:text-7xl font-serif mb-12 leading-[1.1] tracking-tighter">Excelencia <br /> sin <span class="italic text-[#CC5833]">excusas.</span></h3>
+              <p class="text-gray-500 text-lg leading-relaxed mb-16 italic">"Cada pieza es un manifiesto de lo que sucede cuando el oficio tradicional se encuentra con la tecnología del futuro."</p>
+              <div class="flex items-center gap-6">
+                 <div class="w-16 h-16 bg-[#CC5833]/10 text-[#CC5833] rounded-2xl flex items-center justify-center">
+                    <i data-lucide="gem" size="24"></i>
+                 </div>
+                 <div>
+                    <p class="font-black text-xs tracking-widest uppercase">Legado Yajaira</p>
+                    <p class="text-gray-400 text-xs">Joyería que redefine el estándar.</p>
+                 </div>
+              </div>
+           </div>
+        </div>
+    </section>
+
+    <!-- Footer y Conexión Social -->
+    <footer id="contacto" class="bg-black text-white py-48 px-8 rounded-t-[5rem]">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-24 items-start mb-40">
+                <div class="reveal text-left">
+                    <h2 class="text-8xl md:text-[15rem] font-serif leading-none tracking-tighter italic mb-12">
+                        Únete <br />
+                        <span class="text-[#CC5833]">hoy.</span>
+                    </h2>
+                    <div class="flex flex-col sm:flex-row gap-6">
+                        <button class="bg-white text-black px-16 py-7 rounded-full font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#CC5833] hover:text-white transition-all shadow-2xl">
+                            Inscribirme al Master
+                        </button>
+                        <button class="border border-white/20 px-16 py-7 rounded-full font-black uppercase text-[10px] tracking-[0.4em] hover:border-[#CC5833] hover:text-[#CC5833] transition-all">
+                            WhatsApp
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="reveal md:pt-12 text-left">
+                    <p class="text-[#CC5833] font-black text-xs tracking-[0.5em] uppercase mb-12">Nuestras Redes</p>
+                    <div class="space-y-6">
+                        <a href="#" target="_blank" class="group flex items-center justify-between border-b border-white/10 pb-6 hover:border-[#CC5833] transition-all">
+                            <div class="flex items-center gap-6">
+                                <i data-lucide="instagram" class="text-white/40 group-hover:text-[#CC5833]"></i>
+                                <span class="text-4xl font-serif italic tracking-tighter">Instagram</span>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="opacity-0 group-hover:opacity-100 transition-all text-[#CC5833]"></i>
+                        </a>
+                        <a href="#" target="_blank" class="group flex items-center justify-between border-b border-white/10 pb-6 hover:border-[#CC5833] transition-all">
+                            <div class="flex items-center gap-6">
+                                <i data-lucide="facebook" class="text-white/40 group-hover:text-[#CC5833]"></i>
+                                <span class="text-4xl font-serif italic tracking-tighter">Facebook</span>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="opacity-0 group-hover:opacity-100 transition-all text-[#CC5833]"></i>
+                        </a>
+                        <a href="#" target="_blank" class="group flex items-center justify-between border-b border-white/10 pb-6 hover:border-[#CC5833] transition-all">
+                            <div class="flex items-center gap-6">
+                                <i data-lucide="music-2" class="text-white/40 group-hover:text-[#CC5833]"></i>
+                                <span class="text-4xl font-serif italic tracking-tighter">TikTok</span>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="opacity-0 group-hover:opacity-100 transition-all text-[#CC5833]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-24 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-[10px] tracking-[0.5em] text-white/20 uppercase font-black">
+                <div class="flex flex-col gap-2 text-left">
+                    <span>© Esteban Ocampo | Master Joyero</span>
+                    <span class="text-[8px] opacity-50 tracking-[0.2em]">Joyería Yajaira Legacy</span>
+                </div>
+                <div class="flex items-center gap-3 mt-8 md:mt-0">
+                    <div class="w-2 h-2 bg-[#CC5833] rounded-full animate-pulse shadow-[0_0_15px_rgba(204,88,51,0.8)]"></div>
+                    Sistema Activo
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar Iconos
+        lucide.createIcons();
+
+        // GSAP Animations
+        window.addEventListener('load', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero Entrance
+            gsap.from(".hero-text", {
+                y: 120,
+                opacity: 0,
+                duration: 1.5,
+                stagger: 0.2,
+                ease: "power4.out"
+            });
+
+            // Reveal Sections
+            gsap.utils.toArray(".reveal").forEach((el) => {
+                gsap.from(el, {
+                    y: 80,
+                    opacity: 0,
+                    duration: 1.2,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 90%",
+                    }
+                });
+            });
+
+            // Sticky Scaling Cards
+            const cards = gsap.utils.toArray(".archive-card");
+            cards.forEach((card, i) => {
+                if (i !== cards.length - 1) {
+                    gsap.to(card, {
+                        scale: 0.9,
+                        opacity: 0.4,
+                        filter: "blur(12px)",
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 10%",
+                            endTrigger: cards[i + 1],
+                            end: "top 10%",
+                            scrub: true,
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
 </html>
