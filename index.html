@@ -38,6 +38,13 @@
         .transition-glow:hover {
             box-shadow: 0 0 20px rgba(204, 88, 51, 0.4);
         }
+
+        /* Skeleton loader for images */
+        .img-container {
+            background-color: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="bg-white text-black selection-orange overflow-x-hidden">
@@ -47,7 +54,7 @@
 
     <!-- Navegación de Alta Gama -->
     <nav class="fixed top-0 left-0 w-full z-50 px-8 py-10 flex justify-between items-center mix-blend-difference text-white">
-        <div class="flex flex-col">
+        <div class="flex flex-col text-left">
             <span class="font-black tracking-tighter text-2xl uppercase leading-none">Esteban Ocampo</span>
             <span class="text-[#CC5833] text-[10px] font-bold tracking-[0.4em] uppercase mt-1">Master Class</span>
         </div>
@@ -63,7 +70,7 @@
             <div class="hidden md:flex gap-5 border-r border-white/20 pr-6 mr-2">
                 <a href="#" target="_blank" class="hover:text-[#CC5833] transition-colors"><i data-lucide="instagram" style="width:18px"></i></a>
                 <a href="#" target="_blank" class="hover:text-[#CC5833] transition-colors"><i data-lucide="facebook" style="width:18px"></i></a>
-                <a href="#" target="_blank" class="hover:text-[#CC5833] transition-colors"><i data-lucide="music-2" style="width:18px"></i></a>
+                <a href="#" target="_blank" class="hover:text-[#CC5833] transition-colors"><i data-lucide="video" style="width:18px"></i></a> <!-- TikTok icon placeholder -->
             </div>
             <button class="bg-white text-black px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-[#CC5833] hover:text-white transition-all duration-300">
                 Inscribirme
@@ -78,11 +85,12 @@
                 src="https://raw.githubusercontent.com/josedavid/images/main/fotos%20esteban%20ocampo%20trabajando%20fotos%20para%20pagina%20(5).jpeg" 
                 alt="[Imagen de Esteban Ocampo trabajando]" 
                 class="w-full h-full object-cover opacity-60 grayscale scale-105"
+                onerror="this.style.display='none'"
             />
             <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
         </div>
 
-        <div class="relative z-10 max-w-5xl">
+        <div class="relative z-10 max-w-5xl text-left">
             <div class="hero-text text-[#CC5833] text-xs font-bold tracking-[0.5em] mb-10 uppercase flex items-center gap-4">
                 <div class="w-12 h-[1px] bg-[#CC5833]"></div> 30 Años de Legado en Joyería
             </div>
@@ -106,7 +114,7 @@
 
     <!-- El Método -->
     <section id="metodo" class="py-40 px-8 md:px-24 bg-white grid md:grid-cols-2 gap-32 items-center">
-        <div class="reveal">
+        <div class="reveal text-left">
             <span class="text-[10px] font-black tracking-[0.6em] text-[#CC5833] uppercase mb-6 block">Dualidad Técnica</span>
             <h2 class="text-6xl md:text-8xl font-serif mb-16 leading-none tracking-tighter">
                 De la mesa <br /> al <span class="italic text-[#CC5833]">algoritmo.</span>
@@ -133,12 +141,12 @@
             </div>
         </div>
         <div class="reveal space-y-8">
-            <div class="aspect-[4/5] bg-black rounded-[3rem] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000">
-                <img src="https://raw.githubusercontent.com/josedavid/images/main/1772495540370.jpg" alt="[Anillo físico en mesa de trabajo]" class="w-full h-full object-cover opacity-80" />
+            <div class="img-container aspect-[4/5] rounded-[3rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000">
+                <img src="https://raw.githubusercontent.com/josedavid/images/main/1772495540370.jpg" alt="[Anillo físico en mesa de trabajo]" class="w-full h-full object-cover opacity-80" onerror="this.parentElement.style.background='#111'" />
             </div>
             <div class="flex justify-end">
-                <div class="w-2/3 aspect-video bg-[#1A1A1A] rounded-[2rem] overflow-hidden shadow-xl border border-white/5">
-                    <img src="https://raw.githubusercontent.com/josedavid/images/main/trabajo%20cad.jpg" alt="[Diseño CAD en MatrixGold]" class="w-full h-full object-cover" />
+                <div class="img-container w-2/3 aspect-video bg-[#1A1A1A] rounded-[2rem] shadow-xl border border-white/5">
+                    <img src="https://raw.githubusercontent.com/josedavid/images/main/trabajo%20cad.jpg" alt="[Diseño CAD en MatrixGold]" class="w-full h-full object-cover" onerror="this.parentElement.style.background='#111'" />
                 </div>
             </div>
         </div>
@@ -156,7 +164,7 @@
             <h2 class="text-5xl md:text-8xl font-serif italic mb-16 leading-tight tracking-tighter">
                 "La tecnología no sustituye la mano del maestro, <br /> le otorga <span class="text-[#CC5833]">precisión infinita</span>."
             </h2>
-            <div class="flex items-center justify-center gap-6">
+            <div class="flex items-center justify-center gap-6 text-center">
                 <div class="h-[1px] w-20 bg-white/10"></div>
                 <p class="text-white/40 tracking-[0.6em] uppercase text-[10px] font-black">Esteban Ocampo | Mentor IA</p>
                 <div class="h-[1px] w-20 bg-white/10"></div>
@@ -205,8 +213,8 @@
     <!-- Showcase Final: Bitcoin Pendant -->
     <section class="py-40 px-8 bg-white border-t border-black/5">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-24 items-center">
-           <div class="reveal aspect-[4/6] bg-black rounded-[4rem] overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000">
-              <img src="https://raw.githubusercontent.com/josedavid/images/main/fotos%20trabajos%20fondo%20negro%20(6).png" alt="[Pieza final: Dije Bitcoin de oro]" class="w-full h-full object-cover" />
+           <div class="reveal img-container aspect-[4/6] rounded-[4rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000">
+              <img src="https://raw.githubusercontent.com/josedavid/images/main/fotos%20trabajos%20fondo%20negro%20(6).png" alt="[Pieza final: Dije Bitcoin de oro]" class="w-full h-full object-cover" onerror="this.parentElement.style.background='#111'" />
            </div>
            <div class="reveal text-left">
               <h3 class="text-5xl md:text-7xl font-serif mb-12 leading-[1.1] tracking-tighter">Excelencia <br /> sin <span class="italic text-[#CC5833]">excusas.</span></h3>
@@ -227,8 +235,8 @@
     <!-- Footer y Conexión Social -->
     <footer id="contacto" class="bg-black text-white py-48 px-8 rounded-t-[5rem]">
         <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-24 items-start mb-40">
-                <div class="reveal text-left">
+            <div class="grid md:grid-cols-2 gap-24 items-start mb-40 text-left">
+                <div class="reveal">
                     <h2 class="text-8xl md:text-[15rem] font-serif leading-none tracking-tighter italic mb-12">
                         Únete <br />
                         <span class="text-[#CC5833]">hoy.</span>
@@ -243,26 +251,26 @@
                     </div>
                 </div>
                 
-                <div class="reveal md:pt-12 text-left">
+                <div class="reveal md:pt-12">
                     <p class="text-[#CC5833] font-black text-xs tracking-[0.5em] uppercase mb-12">Nuestras Redes</p>
                     <div class="space-y-6">
-                        <a href="#" target="_blank" class="group flex items-center justify-between border-b border-white/10 pb-6 hover:border-[#CC5833] transition-all">
-                            <div class="flex items-center gap-6">
+                        <a href="https://instagram.com/tu_usuario" target="_blank" class="group flex items-center justify-between border-b border-white/10 pb-6 hover:border-[#CC5833] transition-all">
+                            <div class="flex items-center gap-6 text-left">
                                 <i data-lucide="instagram" class="text-white/40 group-hover:text-[#CC5833]"></i>
                                 <span class="text-4xl font-serif italic tracking-tighter">Instagram</span>
                             </div>
                             <i data-lucide="arrow-up-right" class="opacity-0 group-hover:opacity-100 transition-all text-[#CC5833]"></i>
                         </a>
-                        <a href="#" target="_blank" class="group flex items-center justify-between border-b border-white/10 pb-6 hover:border-[#CC5833] transition-all">
-                            <div class="flex items-center gap-6">
+                        <a href="https://facebook.com/tu_pagina" target="_blank" class="group flex items-center justify-between border-b border-white/10 pb-6 hover:border-[#CC5833] transition-all">
+                            <div class="flex items-center gap-6 text-left">
                                 <i data-lucide="facebook" class="text-white/40 group-hover:text-[#CC5833]"></i>
                                 <span class="text-4xl font-serif italic tracking-tighter">Facebook</span>
                             </div>
                             <i data-lucide="arrow-up-right" class="opacity-0 group-hover:opacity-100 transition-all text-[#CC5833]"></i>
                         </a>
-                        <a href="#" target="_blank" class="group flex items-center justify-between border-b border-white/10 pb-6 hover:border-[#CC5833] transition-all">
-                            <div class="flex items-center gap-6">
-                                <i data-lucide="music-2" class="text-white/40 group-hover:text-[#CC5833]"></i>
+                        <a href="https://tiktok.com/@tu_usuario" target="_blank" class="group flex items-center justify-between border-b border-white/10 pb-6 hover:border-[#CC5833] transition-all">
+                            <div class="flex items-center gap-6 text-left">
+                                <i data-lucide="video" class="text-white/40 group-hover:text-[#CC5833]"></i>
                                 <span class="text-4xl font-serif italic tracking-tighter">TikTok</span>
                             </div>
                             <i data-lucide="arrow-up-right" class="opacity-0 group-hover:opacity-100 transition-all text-[#CC5833]"></i>
